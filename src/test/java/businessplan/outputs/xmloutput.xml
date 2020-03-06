@@ -12,14 +12,23 @@
           <void property="children">
            <void method="add">
             <object class="businessplan.main.Section">
+             <void property="content">
+              <string>Content 1 of Objective1</string>
+             </void>
              <void property="parent">
               <object idref="Section2"/>
              </void>
              <void property="sectionName">
               <string>Obj1</string>
              </void>
+             <void property="sectionType">
+              <string>Objective</string>
+             </void>
             </object>
            </void>
+          </void>
+          <void property="content">
+           <string>Content of Mission1</string>
           </void>
           <void property="parent">
            <object idref="Section1"/>
@@ -27,8 +36,14 @@
           <void property="sectionName">
            <string>M1</string>
           </void>
+          <void property="sectionType">
+           <string>Mission</string>
+          </void>
          </object>
         </void>
+       </void>
+       <void property="content">
+        <string>Content of Vision1</string>
        </void>
        <void property="parent">
         <object idref="Section0"/>
@@ -36,25 +51,30 @@
        <void property="sectionName">
         <string>V1</string>
        </void>
+       <void property="sectionType">
+        <string>Vision</string>
+       </void>
       </object>
      </void>
      <void method="add">
       <object class="businessplan.main.Section">
+       <void property="content">
+        <string>Content of Vision2</string>
+       </void>
        <void property="parent">
         <object idref="Section0"/>
        </void>
        <void property="sectionName">
         <string>V2</string>
        </void>
-      </object>
-     </void>
-     <void method="add">
-      <object class="businessplan.main.Section">
-       <void property="parent">
-        <object idref="Section0"/>
+       <void property="sectionType">
+        <string>Vision</string>
        </void>
       </object>
      </void>
+    </void>
+    <void property="sectionType">
+     <string>HEAD</string>
     </void>
    </object>
   </void>

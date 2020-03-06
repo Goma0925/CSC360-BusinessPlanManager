@@ -64,10 +64,9 @@ public class BusinessPlan {
 		}
 	}
 	
-	public void addChildSectionTo(Section parent) throws InvalidSectionInsertionException{
-		// Add a section to the predefined section.
-		//Section head = this.head;
-		
+	public Section addChildSectionTo(Section parent) throws InvalidSectionInsertionException{
+		// Add a section to the predefined section & return the Section node newly created.
+		Section newChild;
 		//1. Check if parent's sectionType is a valid section type
 		if (!this.hierarchyDict.containsKey(parent.sectionType)){
 			throw new InvalidSectionInsertionException("Cannot Insert to this node.");
@@ -76,13 +75,14 @@ public class BusinessPlan {
 			//2. Check if the parent is not a leaf
 			boolean nodeCanHaveChildren = isNotLeafSectionType(childSectionType);//Implement here ); 
 					if (nodeCanHaveChildren) {
-						parent.addChild(childSectionType);
+						newChild = parent.addChild(childSectionType);
 					}else {
 						//Raise an Exception
 						throw new InvalidSectionInsertionException("Section is a leaf and cannot have a child node.");
 					};
 			
 		};
+		return newChild;
 	};
 	
 	public void deleteSection(Section node) throws InvalidSectionDeletionException{
@@ -118,18 +118,18 @@ public class BusinessPlan {
    }
    
    public void setPlanName(String planName){
-      this.planName = this.planName;
+      this.planName = planName;
    }
    
    public String getPlanName(){
       return this.planName;
    }
    
-   public void setHierarchyDict(Hashtable hierarchyDict){
+   public void setHierarchyDict(Hashtable<String, String> hierarchyDict){
       this.hierarchyDict = hierarchyDict;
    }
    
-   public Hashtable getHierarchyDict(){
+   public Hashtable<String, String> getHierarchyDict(){
       return this.hierarchyDict;
    }
    

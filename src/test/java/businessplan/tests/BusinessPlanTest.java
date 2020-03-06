@@ -6,10 +6,10 @@ import java.io.File;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
-
-import businessplan.exceptions.InvalidSectionDeletionException;
-import businessplan.exceptions.InvalidSectionInsertionException;
+import businessplan.exceptions.*;
 import businessplan.main.*;
+import businessplan.main.TreeInspector;
+
 
 class BusinessPlanTest {
 
@@ -29,10 +29,10 @@ class BusinessPlanTest {
 			//Get the node
 			Section head = bPlans[i].getHead();
 			
-			//Test content modification methods of Section
+			//Test content modification methods of Section. - Delete the head.
 			try {
 				bPlans[i].deleteSection(head);			
-				fail("The head section should not be deleted");
+				fail("The head section(Dummy node) should not be deleted");
 			}catch(InvalidSectionDeletionException e) {
 				System.out.println("SUCCESS: Business plan did not allow the invalid head deletion.");
 			}
@@ -51,7 +51,7 @@ class BusinessPlanTest {
 			
 			//Add obj2 under mission1
 			try {
-				bPlans[i].addChildSectionTo(mission1);	
+				Section newChild = bPlans[i].addChildSectionTo(mission1);	
 			}catch (InvalidSectionInsertionException e) {
 				System.out.println(e.getMessage());
 			}
@@ -62,7 +62,7 @@ class BusinessPlanTest {
 			//Get the leaf & trying adding a child to the leaf
 			Section action1 = bPlans[i].getChildrenOf(obj1).get(0).getChildren().get(0);
 			try {
-				bPlans[i].addChildSectionTo(action1);	
+				Section newChild = bPlans[i].addChildSectionTo(action1);	
 				fail("BusinessPlan shold not allow addition to the leaf node.");
 			} catch(InvalidSectionInsertionException e) {
 				System.out.println("SUCCESS: Business plan did not allow the invalid addition.");
@@ -92,30 +92,48 @@ class BusinessPlanTest {
         //Fill in the data in the business plan
         try{
            Section head = planV.getHead();
-           planV.addChildSectionTo(head);
            Section v1 = planV.getChildrenOf(head).get(0);
            v1.setSectionName("V1");
-           planV.addChildSectionTo(head);
-           Section v2 = planV.getChildrenOf(head).get(1);
+           v1.setContent("Content of Vision1");
+           Section v2 = planV.addChildSectionTo(head); 
            v2.setSectionName("V2");
+           v2.setContent("Content of Vision2");
            Section m1 = planV.getChildrenOf(v1).get(0);
            m1.setSectionName("M1");
+           m1.setContent("Content of Mission1");
            Section obj1 = planV.getChildrenOf(m1).get(0);
            obj1.setSectionName("Obj1");
+           obj1.setContent("Content 1 of Objective1");
         }catch(Exception e){
         	System.out.println("Initialization error");
            fail(e.getMessage());
         };
         
+        //Encode into XML
 		BusinessPlanSerializer serializer = new BusinessPlanSerializer();
         File storageFile = new File(xmloutputFilePath);
         try {
             serializer.encodeToXML(planV, storageFile);
         }catch (Exception e) {
+        	System.out.println(e.getMessage());
         	fail("BusinessPlanSerializer failed to encode a BusinessPlan instance into XML.");
         };
-        //BusinessPlan restoredPlan = serializer.decodeFromXML(storageFile);
-		
+        
+        //Read back into an instance from XML.
+        BusinessPlan restoredPlanV = null;
+        try {
+        	restoredPlanV = serializer.decodeFromXML(storageFile);
+        }catch(Exception e) {
+        	System.out.println(e.getMessage());
+        	fail("BusinessPlanSerializer failed to read a BusinessPlan instance from XML.");
+        }
+        TreeInspector inspector = new TreeInspector();
+        boolean isValidDecoding = inspector.isSameTrees(planV, restoredPlanV);
+        if (isValidDecoding) {
+        	System.out.println("SUCCESS: BusinessPlan was restored from XML successfully");
+        }else{
+        	fail("The tree did not match after restored from XML.");
+        };
         
         System.out.println("SUPER SUCCESS: We passed all the tests!");
 	}

@@ -20,11 +20,12 @@ public class Section {
 		this.sectionType = sectionType;
 	}
 		
-	protected void addChild(String childsectionType){
+	protected Section addChild(String childsectionType){
 		//COMPLETED
 		Section child = new Section(childsectionType);
 		child.parent = this;
 		this.children.add(child);
+		return child;
 	}
 	
 	protected void deleteChild(Section node) throws InvalidSectionDeletionException {
@@ -43,7 +44,7 @@ public class Section {
 		this.content = content;
 	}
    
-   public String getSectionaType(){
+   public String getSectionType(){
       return this.sectionType;
    }
    
