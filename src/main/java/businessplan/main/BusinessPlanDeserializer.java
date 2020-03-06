@@ -8,7 +8,7 @@ import java.io.FileOutputStream;
 public class BusinessPlanDeserializer {	
 
 	
-	public void encodeToXML(File inFile) throws FileNotFoundException {
+	public void decodeFromXML(File inFile) throws FileNotFoundException {
     		String filename = inFile.getAbsolutePath();
 		XMLDecoder decoder=null;
 		try {
