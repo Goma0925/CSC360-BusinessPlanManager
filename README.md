@@ -5,5 +5,5 @@ heirarchy of your plan.
 Ex: 
 	BusinessPlan BP = BusinessPlan("VMOSA", "Computer Science", ["Vision","Mission","Objectives","Strategies","Plan of Action"])
 	
-The demonstration of the usage and test are in /src/test/java/businessplan/tests/BusinessPlanTest.java
+<b>The demonstration of the usage and test are in /src/test/java/businessplan/tests/BusinessPlanTest.java</b>
  
