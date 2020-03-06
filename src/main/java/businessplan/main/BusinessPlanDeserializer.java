@@ -9,7 +9,7 @@ public class BusinessPlanDeserializer {
 
 	
 	public void encodeToXML(File inFile) throws FileNotFoundException {
-    String filename = inFile.getAbsolutePath();
+    		String filename = inFile.getAbsolutePath();
 		XMLDecoder decoder=null;
 		try {
 			decoder=new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)));
@@ -17,7 +17,7 @@ public class BusinessPlanDeserializer {
 			System.out.println("ERROR: xml File not found");
 		}
 		BusinessPlan bp=(BusinessPlan)decoder.readObject();
-		System.out.println(bp);
+		return bp;
 
 	}
 }
